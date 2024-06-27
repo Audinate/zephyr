@@ -924,6 +924,8 @@ void HAL_ETH_ErrorCallback(ETH_HandleTypeDef *heth)
 	switch (error_code) {
 	case HAL_ETH_ERROR_DMA:
 		dma_error = HAL_ETH_GetDMAError(heth);
+		
+		dev_data->stats.error_details.rx_dma_failed = dma_error;
 
 #if defined(CONFIG_SOC_SERIES_STM32H7X) || defined(CONFIG_SOC_SERIES_STM32H5X)
 		if ((dma_error & ETH_DMA_RX_WATCHDOG_TIMEOUT_FLAG)   ||
@@ -952,6 +954,8 @@ void HAL_ETH_ErrorCallback(ETH_HandleTypeDef *heth)
 #if defined(CONFIG_SOC_SERIES_STM32H7X) || defined(CONFIG_SOC_SERIES_STM32H5X)
 	case HAL_ETH_ERROR_MAC:
 		mac_error = HAL_ETH_GetMACError(heth);
+		
+		dev_data->stats.error_details.mac_errors = mac_error;
 
 		if (mac_error & ETH_RECEIVE_WATCHDOG_TIMEOUT) {
 			eth_stats_update_errors_rx(dev_data->iface);

@@ -463,6 +463,8 @@ struct net_stats_eth_errors {
 
 	/** Number of corrected ECC errors */
 	net_stats_t corr_ecc_errors;
+	
+	net_stats_t mac_errors;
 };
 
 /**
